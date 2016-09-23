@@ -6,12 +6,21 @@ from copy import deepcopy
 
 def make_new_grid(grid_list, filen):
     """
+    This function takes the DDA input grids and output analysis file, and
+    creates a new CF- and Py-ART-compliant Grid object. Wind information
+    outside the mutual radar coverage region is masked.
+
     Parameters
     ----------
-    
+    grid_list : 2-3 element list of Py-ART Grid objects
+        The Py-ART Grids are the original input grids to the DDA engine.
     filen : str
-        Name of file to 
+        Name of DDA output file.
 
+    Returns
+    -------
+    new_grid : Py-ART Grid object
+        CF- and Py-ART-compliant Grid object
     """
     new_grid = deepcopy(grid_list[0])
 
@@ -106,9 +115,9 @@ def make_new_grid(grid_list, filen):
 
 
 def _add_field_to_grid(
-    field, grid, field_name, units, long_name, standard_name, fill_value):
+        field, grid, field_name, units, long_name, standard_name, fill_value):
     """
-    Adds a field to the Py-ART grid object.
+    Adds a field to the Py-ART Grid object.
     """
     field_dict = {'data': field,
                   'units': units,
@@ -117,4 +126,3 @@ def _add_field_to_grid(
                   '_FillValue': fill_value}
     grid.add_field(field_name, field_dict, replace_existing=True)
     return grid
-

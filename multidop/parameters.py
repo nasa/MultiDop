@@ -419,7 +419,19 @@ class CalcParamFile(_Parameters):
 def check_kwargs(kwargs, default_kw):
     """
     Check user-provided kwargs against defaults, and if some defaults aren't
-    provided by user make sure they are provided to the function regardless.
+    provided by user make sure they are provided to the DDA input file.
+
+    Parameters
+    ----------
+    kwargs : dict
+        User-specified keyword dictionary
+    default_kw : dict
+        Default keyword dictionary
+
+    Returns
+    -------
+    kwargs : dict
+        Dictionary of keywords for input to the DDA input parameter files
     """
     if 'grid' not in kwargs or 'x' not in kwargs or 'y' not in kwargs or \
             'z' not in kwargs:

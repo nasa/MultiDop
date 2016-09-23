@@ -46,7 +46,6 @@ def gc_bear_array(lat1, lon1, lat2, lon2):
     """
     Input lat1/lon1 and lat2/lon2 as decimal degrees.
     Returns initial bearing (deg) from lat1/lon1 to lat2/lon2.
-    Cannot be vectorized due to atan2
     """
     lat1r = np.deg2rad(lat1)
     lon1r = np.deg2rad(lon1)
@@ -60,8 +59,8 @@ def gc_bear_array(lat1, lon1, lat2, lon2):
 
 
 def _add_field_to_object(
-    radar, field, field_name='AZ', units='degrees from north',
-    long_name='Azimuth', standard_name='Azimuth', dz_name='DT'):
+        radar, field, field_name='AZ', units='degrees from north',
+        long_name='Azimuth', standard_name='Azimuth', dz_name='DT'):
     """
     Adds an unmasked field to the Py-ART radar object.
     """
@@ -76,7 +75,22 @@ def _add_field_to_object(
 
 def add_azimuth_as_field(grid, dz_name='DT', az_name='AZ'):
     """
-    grid
+    Add azimuth field to a Py-ART Grid object. The bearing to each gridpoint
+    is computed using the Haversine method and Great Circle approximation.
+
+    Parameters
+    ----------
+    grid : Py-ART Grid object
+        Input Grid object for modification.
+    dz_name : str
+        Name of the reflectivity field in the Grid.
+    az_name : str
+        Name of the azimuth field to add to the Grid. DDA engine expects 'AZ'.
+
+    Returns
+    -------
+    grid : Py-ART Grid object
+        Output Grid object with azimuth field added.
     """
     az = gc_bear_array(
         grid.radar_latitude['data'][0], grid.radar_longitude['data'][0],
@@ -87,7 +101,24 @@ def add_azimuth_as_field(grid, dz_name='DT', az_name='AZ'):
 
 def add_elevation_as_field(grid, dz_name='DT', el_name='EL'):
     """
-    grid
+    Add elevation field to a Py-ART Grid object. The elevation to each
+    gridpoint is computed using the standard radar beam propagation
+    equation. Grid is assumed to reference against 0 m MSL,
+    *not* AGL. Ground range computed using the Haversine method.
+
+    Parameters
+    ----------
+    grid : Py-ART Grid object
+        Input Grid object for modification.
+    dz_name : str
+        Name of the reflectivity field in the Grid.
+    el_name : str
+        Name of the elevation field to add to Grid. DDA engine expects 'EL'.
+
+    Returns
+    -------
+    grid : Py-ART Grid object
+        Output Grid object with elevation field added.
     """
     gr = gc_dist(
         grid.radar_latitude['data'][0], grid.radar_longitude['data'][0],
