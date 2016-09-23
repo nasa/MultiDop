@@ -1,0 +1,9 @@
+*.nc
+.DS_Store
+MultiDop.egg-info
+build
+dist
+*.pyc
+*.o
+src/DDA
+examples/.ipynb_checkpoints

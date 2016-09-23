@@ -1,0 +1,35 @@
+Main program: 'DDA.cpp'
+Sample makefile script: 'Makefile' - generates executable 'DDA'
+Simple plotting scripts: DDA_plot.py (Python), DDA_plot.m (Matlab)
+
+Output:
+
+anal.nc - analyzed U, V, W (used as input for DDA_plot.py) 
+u.dat, v.dat, w.dat, vr.dat, vr2.dat, ref.dat, azi.dat, radar.dat, grid.dat - used as input for DDA_plot.m
+
+There is no input namelist; all user-tunable variables are set in main(), ReadDORADE() and ReadFORAY() in DDA.cpp.
+Be sure to set the user-defined parameters near the top of the program; these determine the sizes of certain arrays.
+Some users may find it useful to substantially modify the code to better suit their needs.
+
+Publications of work using this code must cite:
+
+http://journals.ametsoc.org/doi/abs/10.1175/2009JTECHA1256.1   (Shapiro et al. 2009, JTECH)
+http://journals.ametsoc.org/doi/abs/10.1175/JTECH-D-11-00019.1 (Potvin et al. 2012, JTECH)
+
+Note that some features of the code used in the above studies are lacking in the present version, including:
+     spatially-variable advection correction
+     estimation of intrinsic evolution of wind and vorticity fields
+
+Please contact me at corey.potvin@noaa.gov with any questions, suggestions and bug reports.
+
+DEPENDENCIES:
+
+   NETCDF4
+
+   Visky software (Gordon Carrie, OU), available at http://tkgeomap.org/visky/. Only required if radar files use DORADE format; 
+   otherwise, can delete/comment out ReadDORADE subroutine and DORADE header include statements in DDA.cpp.
+
+   maproj3d.f, radarlib3d.f90 (Keith Brewster; written for Advanced Regional Prediction System). Required for mapping obs to analysis grid. Included in package.
+
+
+

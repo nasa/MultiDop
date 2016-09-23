@@ -1,0 +1,94 @@
+Gordon,
+  Here is a list of all the variables that should be in the Namelist(s).  As I said before, it might be easier for the user if there is a separate input file for the variables associated with the coverage routine. I have adjusted my version of of the code in /DDA_KF/src/DDA.cpp on my mac. These variables are in addition to the ones that you have in the parameter file that I am currently using.
+
+
+For the variables at the top of the program 
+    anel = 1;                /* For mass conservation constraint
+                       (CalcDiv):
+                       0 = Boussinesq approximation;
+                       1 = anelastic approximation */
+    laplace = 1;            /* For smoothness constraint (CalcSmooth):
+                       0 = first-order derivatives;
+                       1 = second-order derivatives */
+
+    read_dataweights = 2;        /* For weights in data constraint:
+                       0 = calculate and output to file;
+                       1 = read from file;
+                       2 = weight all observations equally
+                     */
+
+    read_cvg = 0;            /* For dual-Doppler coverage_bg mask
+                       (verification statistics computed
+                       within 2+ Doppler domain only):
+                       0 = calculate;
+                       1 = read from file;
+                       2 = don't calculate */
+    min_CBA = 20;            /* dual-Doppler domain criteria:
+                       minimum threshold on radar cross-beam 
+                       angle (only used if read_cvg=0) */
+    max_dist = 10;            /* dual-Doppler domain criteria:
+                       there must be at least one obs from
+                       each radar within this distance of
+                       the analysis point (only used if
+                       read_cvg=0)  */
+    cutoff=0;                /* Optional height below which to omit
+                       observations from analysis
+                       (e.g., data-denial experiments) */
+
+    UT=0; VT=0;                       /* Prescribed storm motion
+                       (spatiotemporally constant) */
+
+    output_error=0;            /* If = 1, output verification stats
+                       after each iteration (see bottom of
+                       CalcCost) */
+                       
+    weak_height=-1;     /* The index of the height equal to and below that
+                        the sounding constraint is weakened inside regions 
+                        with greater than 10 dbz. Set to -1 to prevent
+                        implementation*/
+    upper_bc=1;     /* Impose upper BC w=0 if 1, ignore if -1*/
+    ITMAX2=200;     /* Number of iterations before the filtering round
+    C1b = 1.0;                // data constraint
+    C2b = 5.0e4;            // mass conservation equation
+    C3b = 0;                // vorticity equation
+    C4b = 5e6;    // horizontal smoothing
+    C5b = 5e6; // vertical smoothing
+    C8b = 0.01; // Sounding constraint
+
+For the variables for the coverage routine
+/* Background coverage arrays for optimal CBA*/
+covo_bg011 = 1;
+covo_bg101 = 1;
+covo_bg110 = 1;
+/* Background coverage arrays for suboptimal CBA*/
+covs_bg011 = 0;
+covs_bg101 = 0;
+covs_bg110 = 0;
+/* Filter coverage arrays for optimal CBA*/
+covo_fil011 = 0;
+covo_fil101 = 1;
+covo_fil110 = 1;
+/* Filter coverage arrays for suboptimal CBA*/
+covs_fil011 = 0;
+covs_fil101 = 0;
+covs_fil110 = 0;
+/* Background and filter coverage arrays for single radar*/
+cov_bg001 = 0;
+cov_bg010 = 0;
+cov_bg100 = 0;
+cov_fil001 = 0;
+cov_fil010 = 0;
+cov_fil100 = 0;
+/* Data weight multiplier when all 3 radar pairs have good CBA's */
+SSeq_trip1 = 1.0;
+SSeq_trip2 = 1.0;
+SSeq_trip3 = 0.0;
+
+
+-- 
+Daniel Betten
+Research Assistant
+Cooperative Institute for Mesoscale Meteorological Studies
+School of Meteorology
+University of Oklahoma
+

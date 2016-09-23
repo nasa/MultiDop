@@ -1,0 +1,39 @@
+
+MultiDop README
+---------------
+MultiDop is a Python-based interface between the C-based DDA code developed at
+University of Oklahoma and the Python Atmospheric Radiation Measurement
+Radar Toolkit (Py-ART) software developed at Argonne National Lab. Use this
+software to perform 3D wind analyses using 2-3 independent Doppler radars.
+
+To install:
+1. Edit the Makefile in the src/ directory to match the compiler and path
+   information relevant to your system.
+2. “python setup.py install” in the master directory.
+
+The installation will compile the DDA binary, which is the analysis engine, as
+well as install the overall Python package. To see how to run the software,
+view the example Jupyter notebooks.
+
+############################
+If you use this software to produce an analysis for a presentation or
+publication, you *must* cite the following papers:
+http://journals.ametsoc.org/doi/abs/10.1175/2009JTECHA1256.1
+(Shapiro et al. 2009, JTECH)
+http://journals.ametsoc.org/doi/abs/10.1175/JTECH-D-11-00019.1
+(Potvin et al. 2012, JTECH)
+############################
+
+
+Old DDA README
+--------------
+Potvin and Shapiro dual Doppler analysis (DDA).
+cd to src, edit Makefile. Go:
+make
+make install
+or
+make install PREFIX=my_binary_dir
+
+Requires C99 and FORTRAN 77 compilers, and NetCDF.
+
+To run, edit a copy of src/params.dda. Then go "DDA myparams.dda"

@@ -1,0 +1,27 @@
+Pre-MultiDop DDA Release Notes
+
+20150616014655
+Initial check in. Previous history is in RCS.tar.gz
+
+20160219162111
+DDA.h --
+    Incremented release version to 0.8.2.
+--
+DDA.c --
+    Parameter file can now provide a name for the velocity variable in OPAWS
+    input. If none given, DDA defaults to "VT".
+--
+geog_proj.c geog_proj.3 --
+    GeogProjLonLatToXY and GeogProjXYToLonLat set return arguments to NAN on
+    failure.
+--
+geog_lib.c geog_lib.3 --
+    Set init variable when setting Earth radius from GEOG_REARTH.
+    In other words, set Earth radius from environment variable once only.
+--
+
+20160516171935
+unix_defs.h --
+    Set C99_REQUIRED compiler variable to force c99, otherwise, c99 is optional.
+--
+

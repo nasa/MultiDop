@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Make a tar ball for a release. Store RCS version information in
+# release_vsn
+
+make clean
+{
+    awk 'BEGIN {printf "DDA_VERSION="};/DDA_VERSION/ {print $3}' DDA.h \
+	    | tr -d \"
+    find . -maxdepth 1 -type f -name '*.[chf]' -exec rlog -h {} \; \
+	 | awk '/Working file/ {printf "%s ", $3}; /head/ {print $2}'
+    echo ""
+} >> distribs
+eval vsn=`awk '/DDA_VERSION/ {print $3}' DDA.h`
+if ! test $vsn
+then
+    echo "%0: could not determine DDA version" 1>&2
+    exit 1
+fi
+app_nm=dda-$vsn
+cd ../..
+mv dda $app_nm
+dist_nm=${app_nm}.tar.gz
+tar zchf $dist_nm $app_nm
+mv $app_nm dda
+echo $dist_nm

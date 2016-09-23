@@ -1,0 +1,42 @@
+DDA_VERSION=0.6
+./leise_filt.f 1.1
+./DDA.h 1.2
+./leise_example.c 1.1
+./coverage.h 1.1
+./DDA.c 1.17
+./coverage.c 1.6
+
+DDA_VERSION=0.7
+./coverage.c 1.6
+./coverage.h 1.1
+./DDA.c 1.26
+./DDA.h 1.2
+./leise_example.c 1.2
+./leise_filt.f 1.1
+
+DDA_VERSION=0.8
+./coverage.h 1.1
+./coverage.c 1.6
+./leise_example.c 1.2
+./DDA.c 1.27
+./DDA.h 1.3
+./leise_filt.f 1.1
+
+DDA_VERSION=0.8.1
+./coverage.h 1.1
+./coverage.c 1.6
+./leise_example.c 1.2
+./DDA.c 1.29
+./DDA.h 1.4
+./leise_filt.f 1.1
+
+DDA_VERSION=0.8.1
+./coverage.h 1.1
+./coverage.c 1.6
+./leise_example.c 1.2
+./DDA.c 1.30
+./DDA.h 1.4
+./leise_filt.f 1.1
+
+DDA_VERSION=0.8.2
+
