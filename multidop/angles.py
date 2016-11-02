@@ -73,7 +73,7 @@ def _add_field_to_object(
     return radar
 
 
-def add_azimuth_as_field(grid, dz_name='DT', az_name='AZ'):
+def add_azimuth_as_field(grid, dz_name='DT', az_name='AZ', bad=-32768):
     """
     Add azimuth field to a Py-ART Grid object. The bearing to each gridpoint
     is computed using the Haversine method and Great Circle approximation.
@@ -86,6 +86,8 @@ def add_azimuth_as_field(grid, dz_name='DT', az_name='AZ'):
         Name of the reflectivity field in the Grid.
     az_name : str
         Name of the azimuth field to add to the Grid. DDA engine expects 'AZ'.
+    bad : int or float
+        Bad data value
 
     Returns
     -------
@@ -95,11 +97,14 @@ def add_azimuth_as_field(grid, dz_name='DT', az_name='AZ'):
     az = gc_bear_array(
         grid.radar_latitude['data'][0], grid.radar_longitude['data'][0],
         grid.point_latitude['data'], grid.point_longitude['data'])
+    cond = np.isfinite(az)
+    az[~cond] = bad
+    az = np.ma.masked_where(az == bad, az)
     grid = _add_field_to_object(grid, az, dz_name=dz_name, field_name=az_name)
     return grid
 
 
-def add_elevation_as_field(grid, dz_name='DT', el_name='EL'):
+def add_elevation_as_field(grid, dz_name='DT', el_name='EL', bad=-32768):
     """
     Add elevation field to a Py-ART Grid object. The elevation to each
     gridpoint is computed using the standard radar beam propagation
@@ -114,6 +119,8 @@ def add_elevation_as_field(grid, dz_name='DT', el_name='EL'):
         Name of the reflectivity field in the Grid.
     el_name : str
         Name of the elevation field to add to Grid. DDA engine expects 'EL'.
+    bad : int or float
+        Bad data value
 
     Returns
     -------
@@ -127,5 +134,8 @@ def add_elevation_as_field(grid, dz_name='DT', el_name='EL'):
     for i in range(len(grid.z['data'])):
         h3[i, :, :] = grid.z['data'][i] - grid.radar_altitude['data'][0]
     sr, el = rsl_get_slantr_and_elev(gr, h3/1000.0)
+    cond = np.isfinite(el)
+    el[~cond] = bad
+    el = np.ma.masked_where(el == bad, el)
     grid = _add_field_to_object(grid, el, dz_name=dz_name, field_name=el_name)
     return grid

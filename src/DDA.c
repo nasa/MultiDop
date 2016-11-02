@@ -1027,7 +1027,6 @@ int main(int argc, char *argv[])
        Verify adjoint (CalcGrad) consistent with cost function (CalcCost)
        - want to see fr decrease to 1.0000 then zero
      */
-
     GradCheck(3*N,xp);
 
     /* Minimize J and output analysis */
@@ -1489,7 +1488,6 @@ void ReadPyART(int num_radar, char opaws_fl_nms[MAX_RADARS][PATH_LEN_MAX],
      */
 
     match = 1;
-    /* TJL debugging */
     for (k = 0; k < num_ob_z; k++) {
 	z_anal = z_min + k * z_inc;
 	if ( fabs(z_ob[k] - z_anal) > z_diff_max ) {
@@ -2046,7 +2044,6 @@ double CalcSmooth (double xp[]) {
 				smoothness+=C5*sss*(dudz2[i][j][k]*dudz2[i][j][k]+dvdz2[i][j][k]*dvdz2[i][j][k]);
 				smoothness+=C6*sss*(dwdz2[i][j][k]*dwdz2[i][j][k]);
 			    }
-
 			    smoothness+=C7*sss*(dwdx2[i][j][k]*dwdx2[i][j][k]+dwdy2[i][j][k]*dwdy2[i][j][k]);
 			    smoothness+=C4*sss*(dudx2[i][j][k]*dudx2[i][j][k]+dudy2[i][j][k]*dudy2[i][j][k]+dvdx2[i][j][k]*dvdx2[i][j][k]+dvdy2[i][j][k]*dvdy2[i][j][k]);
 
@@ -2113,6 +2110,7 @@ double CalcCost (double xp[]) {
     zcount = toterrorz = totwindz = 0.0;
     obstotal=masstotal=vorttotal=bgtotal= 0.0;
     maxobserror=0.0;
+    toterror = 0.0;
     J = 0.0;
     Jtotal=0.0;
 
@@ -2120,10 +2118,10 @@ double CalcCost (double xp[]) {
 	masstotal= CalcDiv(xp);		
     J += masstotal;		// Continuity cost function
     if (C3b>0)
-	vorttotal = CalcVortTend(xp);		
+	vorttotal = CalcVortTend(xp);
     J += vorttotal;		// Vorticity cost function
     if (C4b>0 || C5b>0 || C6b>0 || C7b>0)
-	smoothtotal = CalcSmooth(xp);
+    smoothtotal = CalcSmooth(xp);
     J += smoothtotal;		// Smoothness cost function
     if (C8b>0)
 	bgtotal = CalcBG(xp);		// Background cost function
@@ -2148,7 +2146,7 @@ double CalcCost (double xp[]) {
 	p[i+MM]=2*(V_mod-V_obs[i])*cos(Rad(elevs[i]))*cos(Rad(azims[i]));
 	p[i+2*MM]=2*(V_mod-V_obs[i])*sin(Rad(elevs[i]));
 	obstotal += JJ[i];
-	J += JJ[i];
+    J += JJ[i];
 	totwind += totwind2[i];
 	toterror += toterrorr[i];
 	// Estimate obs error for elevation below 5 degrees
@@ -2168,7 +2166,6 @@ double CalcCost (double xp[]) {
     free(JJ);
     free(totwind2);
     free(toterrorr);
-
     return J;
 }
 
