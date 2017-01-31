@@ -3,7 +3,7 @@ import subprocess
 
 setup(
     name='MultiDop',
-    version='0.2',
+    version='0.3',
     author='Timothy Lang',
     author_email='timothy.j.lang@nasa.gov',
     packages=['multidop',],

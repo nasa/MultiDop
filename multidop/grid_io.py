@@ -4,7 +4,7 @@ import xarray
 from copy import deepcopy
 
 
-def make_new_grid(grid_list, filen):
+def make_new_grid(grid_list, filen, use_mask=True, min_refl=0.0):
     """
     This function takes the DDA input grids and output analysis file, and
     creates a new CF- and Py-ART-compliant Grid object. Wind information
@@ -16,6 +16,12 @@ def make_new_grid(grid_list, filen):
         The Py-ART Grids are the original input grids to the DDA engine.
     filen : str
         Name of DDA output file.
+    use_mask : bool
+        Use the mask returned from DDA to exclude wind solutions outside
+        Doppler lobes from the output grid.
+    min_refl : float
+        Minimum reflectivity, below which wind solutions will be masked in
+        the output grid.
 
     Returns
     -------
@@ -86,7 +92,7 @@ def make_new_grid(grid_list, filen):
 
         if hasattr(new_grid, 'radar_longitude'):
             try:
-                 new_grid.radar_longitude['data'] = np.array(
+                new_grid.radar_longitude['data'] = np.array(
                     [grid_list[0].radar_longitude['data'][0],
                      grid_list[1].radar_longitude['data'][0],
                      grid_list[2].radar_longitude['data'][0]])
@@ -150,14 +156,19 @@ def make_new_grid(grid_list, filen):
     orig_keylist = [key for key in grid_list[0].fields]
     ds = xarray.open_dataset(filen)
     dz = np.array(ds.MAXDBZ.T)
-    dz = np.ma.masked_where(np.logical_or(dz <= 0, dz > 100), dz)
+    dz = np.ma.masked_where(np.logical_or(dz <= min_refl, dz > 100), dz)
     cvg = np.array(ds.CVG.T)
     u = np.ma.asanyarray(ds.U.T)
-    u.mask = np.logical_or(dz.mask, cvg != 1)
     v = np.ma.asanyarray(ds.V.T)
-    v.mask = np.logical_or(dz.mask, cvg != 1)
     w = np.ma.asanyarray(ds.W.T)
-    w.mask = np.logical_or(dz.mask, cvg != 1)
+    if use_mask:
+        u.mask = np.logical_or(dz.mask, cvg != 1)
+        v.mask = np.logical_or(dz.mask, cvg != 1)
+        w.mask = np.logical_or(dz.mask, cvg != 1)
+    else:
+        u.mask = dz.mask
+        v.mask = dz.mask
+        w.mask = dz.mask
     new_grid = _add_field_to_grid(
         dz, new_grid, 'reflectivity', 'dBZ', 'Merged Reflectivity from Radars',
         'Merged Reflectivity', -32768)
@@ -172,6 +183,7 @@ def make_new_grid(grid_list, filen):
         'Vertical Component of the Wind', 'Vertical Wind', -32768)
     for key in orig_keylist:
         del(new_grid.fields[key])
+    ds.close()
 
     return new_grid
 

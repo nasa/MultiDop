@@ -25,7 +25,7 @@ def run_command(command):
     return rc
 
 
-def do_analysis(param_file, cmd_path='../src/DDA'):
+def do_analysis(param_file, cmd_path='../src/DDA', remove=True):
     """
     Execute a 3DVAR multi-Doppler analysis. The analysis will be output to
     the output file specified within the param_file.
@@ -39,7 +39,12 @@ def do_analysis(param_file, cmd_path='../src/DDA'):
     ----------------
     cmd_path : str
         Full path to the DDA executable, including the executable itself.
+
+    remove : bool
+        True - Remove the temporary DDA executable after running the analysis.
+        False - Don't do this. This option is best for parallel processing.
     """
     os.system('cp ' + cmd_path + ' .')
     rc = run_command('./DDA ' + param_file)
-    os.remove('./DDA')
+    if remove:
+        os.remove('./DDA')
