@@ -2881,7 +2881,7 @@ void frprmn(double p[], int n, double ftol, int *iter, int itmax2,
 	    size_t ind;
 
 	    printf("\nDONE \n");
-	    if ((retval = nc_create(frprmn_fl_nm, NC_CLOBBER, &ncid)))
+	    if ((retval = nc_create(frprmn_fl_nm, NC_NETCDF4, &ncid)))
 		ERR(retval);
 	    if ((retval = nc_def_dim(ncid, "NX", NX, &x_dimid)))
 		ERR(retval);
