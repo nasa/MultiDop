@@ -6,7 +6,7 @@
 #ifndef _DDA_H_
 #define _DDA_H_
 
-#define DDA_VERSION "0.8.2"
+#define DDA_VERSION "0.9.0"
 
 /* Length of an input token, e.g. "x:", "#", ... */
 #define TOK_LEN 64
