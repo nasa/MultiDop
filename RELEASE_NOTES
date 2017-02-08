@@ -1,4 +1,4 @@
-Pre-MultiDop DDA Release Notes
+DDA Release Notes
 
 20150616014655
 Initial check in. Previous history is in RCS.tar.gz
@@ -24,4 +24,19 @@ geog_lib.c geog_lib.3 --
 unix_defs.h --
     Set C99_REQUIRED compiler variable to force c99, otherwise, c99 is optional.
 --
+
+
+20170208
+DDA.h --
+    Incremented release version to 0.9.0.
+--
+
+DDA.c —-
+    Updated netCDF input functions to ingest Py-ART grid files.
+
+    Changed frprmn output to NC_NETCDF4 instead of NC_CLOBBER, due to occasional
+    I/O error when running on a cluster.
+—-
+
+
 
