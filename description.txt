@@ -1,2 +1,0 @@
-MultiDop wraps the OU DDA package and merges it to work seamlessly with
-DOE Py-ART.
