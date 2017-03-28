@@ -23,7 +23,7 @@ Get xarray here: http://xarray.pydata.org/en/stable/
 
 Original C code developed by Corey Potvin (OU/CIMMS) and Alan Shapiro (OU). Subsequent major C code improvements and real-data functionality added by Daniel Betten (OU) and Gordon Carrie (OU).
 
-Python code and C code modifications to ingest Py-ART grids are done by Timothy Lang (timothy.j.lang@nasa.gov).
+Python code and C code modifications to ingest Py-ART grids were done by Timothy Lang (timothy.j.lang@nasa.gov).
 
 ############################
 If you use this software to produce an analysis for a presentation or
