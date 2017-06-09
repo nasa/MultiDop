@@ -25,12 +25,10 @@ Original C code developed by Corey Potvin (OU/CIMMS) and Alan Shapiro (OU). Subs
 
 Python code and C code modifications to ingest Py-ART grids were done by Timothy Lang (timothy.j.lang@nasa.gov).  
 
-############################
-If you use this software to produce an analysis for a presentation or
+> If you use this software to produce an analysis for a presentation or
 publication, you *must* cite the following papers:
 http://journals.ametsoc.org/doi/abs/10.1175/2009JTECHA1256.1
 (Shapiro et al. 2009, JTECH)
 http://journals.ametsoc.org/doi/abs/10.1175/JTECH-D-11-00019.1
 (Potvin et al. 2012, JTECH)
-############################
 
