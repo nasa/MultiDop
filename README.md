@@ -1,5 +1,5 @@
-MultiDop README
----------------
+# MultiDop README
+
 MultiDop is a Python-based interface between the C-based DDA code developed at
 University of Oklahoma and the Python Atmospheric Radiation Measurement
 Radar Toolkit (Py-ART) software developed at Argonne National Lab. Use this
