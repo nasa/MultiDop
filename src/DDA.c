@@ -12,8 +12,6 @@
    (though may be better to cite both pubs even if vorticity constraint not
    used).
 
-   Do not share code with others without permission from Corey & Alan
-
    For education or research use only.
 
    Search for "user-defined parameters" and "user-defined variables"

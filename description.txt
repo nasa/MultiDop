@@ -1,2 +1,4 @@
-MultiDop wraps the OU DDA package and merges it to work seamlessly with
-DOE Py-ART.
+MultiDop is a Python-based interface between the C-based DDA code developed at
+University of Oklahoma and the Python Atmospheric Radiation Measurement
+Radar Toolkit (Py-ART) software developed at Argonne National Lab. Use this
+software to perform 3D wind analyses using 2-3 independent Doppler radars.
