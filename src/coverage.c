@@ -49,7 +49,7 @@ static void set_cvg_bg(int, char [MAX_RADARS][PATH_LEN_MAX]);
 static void set_cvg_fil(int, char [MAX_RADARS][PATH_LEN_MAX]);
 static void set_sseq_trip(double, char [MAX_RADARS][PATH_LEN_MAX]);
 static int cvg_idx_i(int, int *);
-static int cvg_idx_s(int, char [MAX_RADARS][PATH_LEN_MAX]);
+static unsigned int cvg_idx_s(int, char [MAX_RADARS][PATH_LEN_MAX]);
 
 /*
    This function reads coverage parameters from the file named fl_nm.
@@ -221,7 +221,7 @@ void Coverage_UseDefault(void)
    Combination must be available, or process exits.
  */
 
-static int cvg_idx_s(int num_radars, char nms[MAX_RADARS][PATH_LEN_MAX])
+static unsigned int cvg_idx_s(int num_radars, char nms[MAX_RADARS][PATH_LEN_MAX])
 {
     int n;				/* Radar loop index */
     int i;				/* Global radar index */
