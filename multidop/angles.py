@@ -98,8 +98,7 @@ def add_azimuth_as_field(grid, dz_name='DT', az_name='AZ', bad=-32768):
         grid.radar_latitude['data'][0], grid.radar_longitude['data'][0],
         grid.point_latitude['data'], grid.point_longitude['data'])
     cond = np.isfinite(az)
-    az[~cond] = bad
-    az = np.ma.masked_where(az == bad, az)
+    az = np.ma.masked_invalid(az)
     grid = _add_field_to_object(grid, az, dz_name=dz_name, field_name=az_name)
     return grid
 
@@ -135,7 +134,6 @@ def add_elevation_as_field(grid, dz_name='DT', el_name='EL', bad=-32768):
         h3[i, :, :] = grid.z['data'][i] - grid.radar_altitude['data'][0]
     sr, el = rsl_get_slantr_and_elev(gr, h3/1000.0)
     cond = np.isfinite(el)
-    el[~cond] = bad
-    el = np.ma.masked_where(el == bad, el)
+    el = np.ma.masked_invalid(el)
     grid = _add_field_to_object(grid, el, dz_name=dz_name, field_name=el_name)
     return grid
