@@ -8,3 +8,4 @@ dist
 src/DDA
 examples/.ipynb_checkpoints
 *.tar.gz
+examples/*.dda
