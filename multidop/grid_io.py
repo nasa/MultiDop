@@ -17,8 +17,11 @@ def make_new_grid(grid_list, filen, use_mask=True, min_refl=0.0):
     filen : str
         Name of DDA output file.
     use_mask : bool
-        Use the mask returned from DDA to exclude wind solutions outside
-        Doppler lobes from the output grid.
+        True - Use the mask returned from DDA to exclude wind solutions outside
+               Doppler lobes from the output grid.
+
+        False - Don't do this.
+
     min_refl : float
         Minimum reflectivity, below which wind solutions will be masked in
         the output grid.
@@ -191,7 +194,27 @@ def make_new_grid(grid_list, filen, use_mask=True, min_refl=0.0):
 def _add_field_to_grid(
         field, grid, field_name, units, long_name, standard_name, fill_value):
     """
-    Adds a field to the Py-ART Grid object.
+    Adds a field to the Py-ART Grid object. Leverages Grid.add_field method.
+
+    Parameters
+    ----------
+    field : str
+        Name of field to be added.
+    grid : pyart.core.grid.Grid object
+        Py-ART grid to receive field.
+    units : str
+        Units of new field.
+    long_name : str
+        Long name of new field.
+    standard_name : str
+        Standard name of new field.
+    fill_value : float
+        Fill value for masked data.
+
+    Returns
+    -------
+    grid : pyart.core.grid.Grid object
+        Py-ART grid with new field added.
     """
     field_dict = {'data': field,
                   'units': units,
