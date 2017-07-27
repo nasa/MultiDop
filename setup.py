@@ -6,7 +6,7 @@ setup(
     version='0.3',
     author='Timothy Lang',
     author_email='timothy.j.lang@nasa.gov',
-    packages=['multidop',],
+    packages=['multidop', ],
     license='LICENSE.md',
     description='Multiple-Doppler Radar Analysis Toolkit (MultiDop)',
     long_description=open('description.txt').read(),

@@ -3,19 +3,24 @@ import numpy as np
 
 def rsl_get_slantr_and_elev(gr, h):
     """
-Author: Timothy Lang (timothy.j.lang@nasa.gov)
-Given ground range and height, return slant range and elevation.
+    Author: Timothy Lang (timothy.j.lang@nasa.gov)
+    Given ground range and height, return slant range and elevation.
+    This Python function is adapted from the Radar Software Library routine
+    RSL_get_slantr_and_elev, written by John Merritt and Dennis Flanigan
 
-Inputs
-  gr  ground range (km)
-  h   height (km)
+    Parameters
+    ----------
+    gr : float
+        Ground range of radar range reoslution volume (km)
+    h : float
+        Height of radar range reoslution volume (km)
 
-Outputs
-  slantr    slant range
-  elev      elevation in degrees
-
-This Python function is adapted from the Radar Software Library routine
-RSL_get_slantr_and_elev, written by John Merritt and Dennis Flanigan
+    Returns
+    -------
+    slantr : float
+        Slant range of radar range reoslution volume (km)
+    elev : float
+        Elevation angle of radar range reoslution volume (degrees)
     """
     Re = 4.0/3.0 * 6371.1  # Effective earth radius in km.
     rh = h + Re
@@ -30,7 +35,24 @@ RSL_get_slantr_and_elev, written by John Merritt and Dennis Flanigan
 def gc_dist(lat1, lon1, lat2, lon2):
     """
     Input lat1/lon1 and lat2/lon2 as decimal degrees.
-    Returns great circle distance in km. Can run in vectorized form!
+    Returns great-circle distance in km. Can run in vectorized form if either
+    1 or 2 are arrays (but not both). Leverages Haversine formula.
+
+    Parameters
+    ----------
+    lat1 : float
+        Latitude(s) of first point (or first set of points) in degrees.
+    lon1 : float
+        Longitude(s) of first point (or first set of points) in degrees.
+    lat2 : float
+        Latitude(s) of second point (or second set of points) in degrees.
+    lon2 : float
+        Longitude(s) of second point (or second set of points) in degrees.
+
+    Returns
+    -------
+    dist : float
+        Great-circle distance(s) between points (km).
     """
     re = np.float64(6371.1)  # km
     lat1r = lat1 * np.pi / np.float64(180.0)
@@ -46,6 +68,24 @@ def gc_bear_array(lat1, lon1, lat2, lon2):
     """
     Input lat1/lon1 and lat2/lon2 as decimal degrees.
     Returns initial bearing (deg) from lat1/lon1 to lat2/lon2.
+    Can run in vectorized form if either 1 or 2 are arrays (but not both).
+    Leverages Haversine formula.
+
+    Parameters
+    ----------
+    lat1 : float
+        Latitude(s) of first point (or first set of points) in degrees.
+    lon1 : float
+        Longitude(s) of first point (or first set of points) in degrees.
+    lat2 : float
+        Latitude(s) of second point (or second set of points) in degrees.
+    lon2 : float
+        Longitude(s) of second point (or second set of points) in degrees.
+
+    Returns
+    -------
+    theta : float
+        Bearing(s) from point(s) 1 to 2 (degrees from true north).
     """
     lat1r = np.deg2rad(lat1)
     lon1r = np.deg2rad(lon1)
@@ -63,6 +103,33 @@ def _add_field_to_object(
         long_name='Azimuth', standard_name='Azimuth', dz_name='DT'):
     """
     Adds an unmasked field to the Py-ART radar object.
+    Leverages Radar.add_field method.
+
+    Parameters
+    ----------
+    radar : pyart.core.radar.Radar object
+        Py-ART radar object to receive new field.
+    field : ndarray
+        Array of data to add to Py-ART radar object.
+
+    Other Parameters
+    ----------------
+    field_name : str
+        Name of field to be added.
+    units : str
+        Units of new field.
+    long_name : str
+        Long name of new field.
+    standard_name : str
+        Standard name of new field.
+    dz_name : str
+        Name of reflectivity field that already exists in Radar object.
+        This will be used to obtain the missing_value parameter.
+
+    Returns
+    -------
+    radar : pyart.core.radar.Radar object
+        Py-ART radar object with new field added.
     """
     field_dict = {'data': np.ma.asanyarray(field),
                   'units': units,

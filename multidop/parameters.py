@@ -32,16 +32,50 @@ DEFAULT_KW = {
 
 
 class _Parameters(object):
+    """
+    A class for assisting with the creation of shell script files that will
+    be ingested by the DDA executable. This internal class will provide common
+    methods to its children, ParamFile and CalcParamFile.
 
+    Attributes
+    ----------
+    params : dict
+        User-supplied dictionary of MultiDop execution parameters.
+        These will all be written to the shell script (*.dda) files.
+    """
     def __init__(self, params_dict):
+        """
+        Initialize object.
+
+        Parameters
+        ----------
+        params_dict : dict
+            User-supplied dictionary of MultiDop execution parameters.
+        """
         self.params = params_dict
 
     def gen_basic_string(self, var):
+        """
+        Generate a basic string line for writing to the shell script files.
+        The line will name the DDA input parameter and provide its value.
+
+        Parameters
+        ----------
+        var : str
+            Name of parameter to be written to a shell script.
+        """
         return var + ':  ' + str(self.params[var]) + '\n'
 
     def gen_str_from_list(self, key):
         """
-        Currently not clear whether this would be Python 3 compliant
+        Generate a basic string line for writing to the shell script files.
+        The line will name a list of DDA input parameters and provide their
+        values. Currently not clear whether this would be Python 3 compliant.
+
+        Parameters
+        ----------
+        key : str
+            Name of parameter to be written to a shell script.
         """
         outstr = key + ':  '
         for item in self.params[key]:
@@ -50,6 +84,22 @@ class _Parameters(object):
         return outstr
 
     def gen_radar_coverage(self, key, dual=True):
+        """
+        Generate the radar coverage array parameters for the shell scripts.
+
+        Parameters
+        ----------
+        key : str
+            Name of parameter to be written to a shell script.
+
+        Other Parameters
+        ----------------
+        dual : bool
+            True - Radar coverage parameters are output to a single line.
+
+            False - Radar coverage parameters are output to multiple lines.
+
+        """
         nrads = len(self.params['files'])
         if not dual:
             outstr = ''
@@ -76,8 +126,28 @@ class _Parameters(object):
 
 
 class ParamFile(_Parameters):
+    """
+    A class for creating the parameter shell script file that will
+    be ingested by the DDA executable.
 
-    def __init__(self, params_dict, filename, ):
+    Attributes
+    ----------
+    blockquotes : list of str objects
+        Block quote text that explains what the different parameters in the
+        file actually mean. This will be written to file.
+    """
+    def __init__(self, params_dict, filename):
+        """
+        Initialize object.
+
+        Parameters
+        ----------
+        params_dict : dict
+            User-supplied dictionary of MultiDop execution parameters.
+        filename : str
+            Name of file (e.g., 'params.dda') to output all the parameters
+            and block quotes to.
+        """
         if 'files' not in params_dict.keys() or \
                 'radar_names' not in params_dict.keys():
             raise IOError('Must specify files and radar_names keys!')
@@ -87,6 +157,9 @@ class ParamFile(_Parameters):
         self.write_params_file(filename)
 
     def set_blockquotes(self):
+        """
+        Define all blockquotes and put them in an iterable list.
+        """
         self.blockquotes = []
         self.blockquotes.append(
             """# Run time parameters for DDA.
@@ -147,6 +220,16 @@ class ParamFile(_Parameters):
 """)
 
     def write_params_file(self, filename):
+        """
+        Write all parameters and blockquotes to an ASCII file that is
+        interpretable by DDA.
+
+        Parameters
+        ----------
+        filename : str
+            Name of file (e.g., 'params.dda') to output all the parameters
+            and block quotes to.
+        """
         f = open(filename, 'w+')
         for i, bq in enumerate(self.blockquotes):
             f.write(bq)
@@ -181,13 +264,36 @@ class ParamFile(_Parameters):
 
 
 class CalcParamFile(_Parameters):
+    """
+    A class for creating the calulation parameter shell script file that will
+    be ingested by the DDA executable.
 
+    Attributes
+    ----------
+    blockquotes : list of str objects
+        Block quote text that explains what the different calculation
+        parameters in the file actually mean. This will be written to file.
+    """
     def __init__(self, params_dict, filename):
+        """
+        Initialize object.
+
+        Parameters
+        ----------
+        params_dict : dict
+            User-supplied dictionary of MultiDop execution parameters.
+        filename : str
+            Name of file (e.g., 'calcparams.dda') to output all the parameters
+            and block quotes to.
+        """
         _Parameters.__init__(self, params_dict)
         self.set_blockquotes()
         self.write_params_file(filename)
 
     def set_blockquotes(self):
+        """
+        Define all blockquotes and put them in an iterable list.
+        """
         self.blockquotes = []
         self.blockquotes.append(
             """# For mass conservation constraint (CalcDiv):
@@ -355,6 +461,16 @@ class CalcParamFile(_Parameters):
 """)
 
     def write_params_file(self, filename):
+        """
+        Write all calculation parameters and blockquotes to an ASCII file that
+        is interpretable by DDA.
+
+        Parameters
+        ----------
+        filename : str
+            Name of file (e.g., 'calcparams.dda') to output all the parameters
+            and block quotes to.
+        """
         f = open(filename, 'w+')
         for i, bq in enumerate(self.blockquotes):
             f.write(bq)

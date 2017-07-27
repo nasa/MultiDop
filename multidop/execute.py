@@ -10,6 +10,17 @@ def run_command(command):
     This function captures text output from a command-line program and
     displays it in the Python shell. Currently does not print the output
     until after the command has completed.
+
+    Parameters
+    ----------
+    command : str
+        Command to send to subprocess.
+
+    Returns
+    -------
+    rc : str
+        Output from command that was executed. For MultiDop, this is all the
+        update text that is printed out by DDA.
     """
     process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE,
                                bufsize=0)
@@ -39,10 +50,11 @@ def do_analysis(param_file, cmd_path='../src/DDA', remove=True):
     ----------------
     cmd_path : str
         Full path to the DDA executable, including the executable itself.
-
     remove : bool
         True - Remove the temporary DDA executable after running the analysis.
+
         False - Don't do this. This option is best for parallel processing.
+
     """
     os.system('cp ' + cmd_path + ' .')
     rc = run_command('./DDA ' + param_file)
