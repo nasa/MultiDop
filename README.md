@@ -14,6 +14,8 @@ The installation will compile the DDA binary, which is the analysis engine, as
 well as install the overall Python package. To see how to run the software,
 view the example Jupyter notebook in the examples/ directory.
 
+MultiDop has been tested using Python 2.7 and Python 3.6.
+
 A conference presentation describing MultiDop and how to use it can be found at https://ams.confex.com/ams/97Annual/webprogram/Paper306647.html
 
 Get Py-ART here: http://arm-doe.github.io/pyart/

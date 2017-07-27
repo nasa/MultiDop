@@ -70,7 +70,7 @@ class _Parameters(object):
         """
         Generate a basic string line for writing to the shell script files.
         The line will name a list of DDA input parameters and provide their
-        values. Currently not clear whether this would be Python 3 compliant.
+        values.
 
         Parameters
         ----------
