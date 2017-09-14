@@ -1,11 +1,16 @@
-*.nc
+examples/*.nc
 .DS_Store
 MultiDop.egg-info
 build
 dist
+examples/*V03
+examples/*.uf.gz
 *.pyc
 *.o
+*.png
 src/DDA
 examples/.ipynb_checkpoints
 *.tar.gz
 examples/*.dda
+examples/MultiDop_Irma.ipynb
+examples/MultiDop_Sample_Workflow_old.ipynb
