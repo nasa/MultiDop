@@ -1,5 +1,7 @@
 # MultiDop README
 
+<b>Note: MultiDop has been superseded by PyDDA (https://github.com/openradar/PyDDA). It is recommended that you install and use PyDDA rather than MultiDop.</b>
+
 MultiDop is a Python-based interface between the C-based DDA code developed at
 University of Oklahoma and the Python Atmospheric Radiation Measurement
 Radar Toolkit (Py-ART) software developed at Argonne National Lab. Use this
